@@ -14,8 +14,8 @@ spec:
   group: security.istio.io
   names:
     categories:
-      - istio-io
-      - security-istio-io
+    - istio-io
+    - security-istio-io
     kind: AuthorizationPolicy
     listKind: AuthorizationPolicyList
     plural: authorizationpolicies
@@ -28,24 +28,23 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Configuration for access control on workloads. See more details
-            at: https://istio.io/docs/reference/config/security/authorization-policy.html"
+          description: 'Configuration for access control on workloads. See more details
+            at: https://istio.io/docs/reference/config/security/authorization-policy.html'
           oneOf:
-            - not:
-                anyOf:
-                  - required:
-                      - provider
-            - required:
+          - not:
+              anyOf:
+              - required:
                 - provider
+          - required:
+            - provider
           properties:
             action:
               description: Optional.
               enum:
-                - ALLOW
-                - DENY
-                - AUDIT
-                - CUSTOM
+              - ALLOW
+              - DENY
+              - AUDIT
+              - CUSTOM
               type: string
             provider:
               description: Specifies detailed configuration of the CUSTOM action.
@@ -226,9 +225,9 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1beta1
-      served: true
-      storage: true
+  - name: v1beta1
+    served: true
+    storage: true
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -243,29 +242,28 @@ metadata:
   name: destinationrules.networking.istio.io
 spec:
   additionalPrinterColumns:
-    - JSONPath: .spec.host
-      description: The name of a service from the service registry
-      name: Host
-      type: string
-    - JSONPath: .metadata.creationTimestamp
-      description:
-        "CreationTimestamp is a timestamp representing the server time when
-        this object was created. It is not guaranteed to be set in happens-before order
-        across separate operations. Clients may not set this value. It is represented
-        in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
-        lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
-      name: Age
-      type: date
+  - JSONPath: .spec.host
+    description: The name of a service from the service registry
+    name: Host
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    description: 'CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
+      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+    name: Age
+    type: date
   group: networking.istio.io
   names:
     categories:
-      - istio-io
-      - networking-istio-io
+    - istio-io
+    - networking-istio-io
     kind: DestinationRule
     listKind: DestinationRuleList
     plural: destinationrules
     shortNames:
-      - dr
+    - dr
     singular: destinationrule
   preserveUnknownFields: false
   scope: Namespaced
@@ -275,13 +273,11 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Configuration affecting load balancing, outlier detection,
-            etc. See more details at: https://istio.io/docs/reference/config/networking/destination-rule.html"
+          description: 'Configuration affecting load balancing, outlier detection,
+            etc. See more details at: https://istio.io/docs/reference/config/networking/destination-rule.html'
           properties:
             exportTo:
-              description:
-                A list of namespaces to which this destination rule is
+              description: A list of namespaces to which this destination rule is
                 exported.
               items:
                 format: string
@@ -312,17 +308,15 @@ spec:
                             description: HTTP connection pool settings.
                             properties:
                               h2UpgradePolicy:
-                                description:
-                                  Specify if http1.1 connection should
+                                description: Specify if http1.1 connection should
                                   be upgraded to http2 for the associated destination.
                                 enum:
-                                  - DEFAULT
-                                  - DO_NOT_UPGRADE
-                                  - UPGRADE
+                                - DEFAULT
+                                - DO_NOT_UPGRADE
+                                - UPGRADE
                                 type: string
                               http1MaxPendingRequests:
-                                description:
-                                  Maximum number of pending HTTP requests
+                                description: Maximum number of pending HTTP requests
                                   to a destination.
                                 format: int32
                                 type: integer
@@ -331,13 +325,11 @@ spec:
                                 format: int32
                                 type: integer
                               idleTimeout:
-                                description:
-                                  The idle timeout for upstream connection
+                                description: The idle timeout for upstream connection
                                   pool connections.
                                 type: string
                               maxRequestsPerConnection:
-                                description:
-                                  Maximum number of requests per connection
+                                description: Maximum number of requests per connection
                                   to a backend.
                                 format: int32
                                 type: integer
@@ -345,33 +337,28 @@ spec:
                                 format: int32
                                 type: integer
                               useClientProtocol:
-                                description:
-                                  If set to true, client protocol will
+                                description: If set to true, client protocol will
                                   be preserved while initiating connection to backend.
                                 type: boolean
                             type: object
                           tcp:
-                            description:
-                              Settings common to both HTTP and TCP upstream
+                            description: Settings common to both HTTP and TCP upstream
                               connections.
                             properties:
                               connectTimeout:
                                 description: TCP connection timeout.
                                 type: string
                               maxConnections:
-                                description:
-                                  Maximum number of HTTP1 /TCP connections
+                                description: Maximum number of HTTP1 /TCP connections
                                   to a destination host.
                                 format: int32
                                 type: integer
                               tcpKeepalive:
-                                description:
-                                  If set then set SO_KEEPALIVE on the socket
+                                description: If set then set SO_KEEPALIVE on the socket
                                   to enable TCP Keepalives.
                                 properties:
                                   interval:
-                                    description:
-                                      The time duration between keep-alive
+                                    description: The time duration between keep-alive
                                       probes.
                                     type: string
                                   probes:
@@ -384,58 +371,58 @@ spec:
                       loadBalancer:
                         description: Settings controlling the load balancer algorithms.
                         oneOf:
-                          - not:
-                              anyOf:
-                                - required:
-                                    - simple
-                                - properties:
-                                    consistentHash:
-                                      oneOf:
-                                        - not:
-                                            anyOf:
-                                              - required:
-                                                  - httpHeaderName
-                                              - required:
-                                                  - httpCookie
-                                              - required:
-                                                  - useSourceIp
-                                              - required:
-                                                  - httpQueryParameterName
-                                        - required:
-                                            - httpHeaderName
-                                        - required:
-                                            - httpCookie
-                                        - required:
-                                            - useSourceIp
-                                        - required:
-                                            - httpQueryParameterName
-                                  required:
-                                    - consistentHash
-                          - required:
+                        - not:
+                            anyOf:
+                            - required:
                               - simple
-                          - properties:
-                              consistentHash:
-                                oneOf:
+                            - properties:
+                                consistentHash:
+                                  oneOf:
                                   - not:
                                       anyOf:
-                                        - required:
-                                            - httpHeaderName
-                                        - required:
-                                            - httpCookie
-                                        - required:
-                                            - useSourceIp
-                                        - required:
-                                            - httpQueryParameterName
+                                      - required:
+                                        - httpHeaderName
+                                      - required:
+                                        - httpCookie
+                                      - required:
+                                        - useSourceIp
+                                      - required:
+                                        - httpQueryParameterName
                                   - required:
-                                      - httpHeaderName
+                                    - httpHeaderName
                                   - required:
-                                      - httpCookie
+                                    - httpCookie
                                   - required:
-                                      - useSourceIp
+                                    - useSourceIp
                                   - required:
-                                      - httpQueryParameterName
-                            required:
+                                    - httpQueryParameterName
+                              required:
                               - consistentHash
+                        - required:
+                          - simple
+                        - properties:
+                            consistentHash:
+                              oneOf:
+                              - not:
+                                  anyOf:
+                                  - required:
+                                    - httpHeaderName
+                                  - required:
+                                    - httpCookie
+                                  - required:
+                                    - useSourceIp
+                                  - required:
+                                    - httpQueryParameterName
+                              - required:
+                                - httpHeaderName
+                              - required:
+                                - httpCookie
+                              - required:
+                                - useSourceIp
+                              - required:
+                                - httpQueryParameterName
+                          required:
+                          - consistentHash
                         properties:
                           consistentHash:
                             properties:
@@ -471,37 +458,32 @@ spec:
                           localityLbSetting:
                             properties:
                               distribute:
-                                description:
-                                  "Optional: only one of distribute or
-                                  failover can be set."
+                                description: 'Optional: only one of distribute or
+                                  failover can be set.'
                                 items:
                                   properties:
                                     from:
-                                      description:
-                                        Originating locality, '/' separated,
+                                      description: Originating locality, '/' separated,
                                         e.g.
                                       format: string
                                       type: string
                                     to:
                                       additionalProperties:
                                         type: integer
-                                      description:
-                                        Map of upstream localities to traffic
+                                      description: Map of upstream localities to traffic
                                         distribution weights.
                                       type: object
                                   type: object
                                 type: array
                               enabled:
-                                description:
-                                  enable locality load balancing, this
+                                description: enable locality load balancing, this
                                   is DestinationRule-level and will override mesh
                                   wide settings in entirety.
                                 nullable: true
                                 type: boolean
                               failover:
-                                description:
-                                  "Optional: only failover or distribute
-                                  can be set."
+                                description: 'Optional: only failover or distribute
+                                  can be set.'
                                 items:
                                   properties:
                                     from:
@@ -516,10 +498,10 @@ spec:
                             type: object
                           simple:
                             enum:
-                              - ROUND_ROBIN
-                              - LEAST_CONN
-                              - RANDOM
-                              - PASSTHROUGH
+                            - ROUND_ROBIN
+                            - LEAST_CONN
+                            - RANDOM
+                            - PASSTHROUGH
                             type: string
                         type: object
                       outlierDetection:
@@ -528,8 +510,7 @@ spec:
                             description: Minimum ejection duration.
                             type: string
                           consecutive5xxErrors:
-                            description:
-                              Number of 5xx errors before a host is ejected
+                            description: Number of 5xx errors before a host is ejected
                               from the connection pool.
                             nullable: true
                             type: integer
@@ -537,8 +518,7 @@ spec:
                             format: int32
                             type: integer
                           consecutiveGatewayErrors:
-                            description:
-                              Number of gateway errors before a host is
+                            description: Number of gateway errors before a host is
                               ejected from the connection pool.
                             nullable: true
                             type: integer
@@ -562,34 +542,29 @@ spec:
                                   description: HTTP connection pool settings.
                                   properties:
                                     h2UpgradePolicy:
-                                      description:
-                                        Specify if http1.1 connection should
+                                      description: Specify if http1.1 connection should
                                         be upgraded to http2 for the associated destination.
                                       enum:
-                                        - DEFAULT
-                                        - DO_NOT_UPGRADE
-                                        - UPGRADE
+                                      - DEFAULT
+                                      - DO_NOT_UPGRADE
+                                      - UPGRADE
                                       type: string
                                     http1MaxPendingRequests:
-                                      description:
-                                        Maximum number of pending HTTP
+                                      description: Maximum number of pending HTTP
                                         requests to a destination.
                                       format: int32
                                       type: integer
                                     http2MaxRequests:
-                                      description:
-                                        Maximum number of requests to a
+                                      description: Maximum number of requests to a
                                         backend.
                                       format: int32
                                       type: integer
                                     idleTimeout:
-                                      description:
-                                        The idle timeout for upstream connection
+                                      description: The idle timeout for upstream connection
                                         pool connections.
                                       type: string
                                     maxRequestsPerConnection:
-                                      description:
-                                        Maximum number of requests per
+                                      description: Maximum number of requests per
                                         connection to a backend.
                                       format: int32
                                       type: integer
@@ -597,34 +572,29 @@ spec:
                                       format: int32
                                       type: integer
                                     useClientProtocol:
-                                      description:
-                                        If set to true, client protocol
+                                      description: If set to true, client protocol
                                         will be preserved while initiating connection
                                         to backend.
                                       type: boolean
                                   type: object
                                 tcp:
-                                  description:
-                                    Settings common to both HTTP and TCP
+                                  description: Settings common to both HTTP and TCP
                                     upstream connections.
                                   properties:
                                     connectTimeout:
                                       description: TCP connection timeout.
                                       type: string
                                     maxConnections:
-                                      description:
-                                        Maximum number of HTTP1 /TCP connections
+                                      description: Maximum number of HTTP1 /TCP connections
                                         to a destination host.
                                       format: int32
                                       type: integer
                                     tcpKeepalive:
-                                      description:
-                                        If set then set SO_KEEPALIVE on
+                                      description: If set then set SO_KEEPALIVE on
                                         the socket to enable TCP Keepalives.
                                       properties:
                                         interval:
-                                          description:
-                                            The time duration between keep-alive
+                                          description: The time duration between keep-alive
                                             probes.
                                           type: string
                                         probes:
@@ -635,62 +605,61 @@ spec:
                                   type: object
                               type: object
                             loadBalancer:
-                              description:
-                                Settings controlling the load balancer
+                              description: Settings controlling the load balancer
                                 algorithms.
                               oneOf:
-                                - not:
-                                    anyOf:
-                                      - required:
-                                          - simple
-                                      - properties:
-                                          consistentHash:
-                                            oneOf:
-                                              - not:
-                                                  anyOf:
-                                                    - required:
-                                                        - httpHeaderName
-                                                    - required:
-                                                        - httpCookie
-                                                    - required:
-                                                        - useSourceIp
-                                                    - required:
-                                                        - httpQueryParameterName
-                                              - required:
-                                                  - httpHeaderName
-                                              - required:
-                                                  - httpCookie
-                                              - required:
-                                                  - useSourceIp
-                                              - required:
-                                                  - httpQueryParameterName
-                                        required:
-                                          - consistentHash
-                                - required:
+                              - not:
+                                  anyOf:
+                                  - required:
                                     - simple
-                                - properties:
-                                    consistentHash:
-                                      oneOf:
+                                  - properties:
+                                      consistentHash:
+                                        oneOf:
                                         - not:
                                             anyOf:
-                                              - required:
-                                                  - httpHeaderName
-                                              - required:
-                                                  - httpCookie
-                                              - required:
-                                                  - useSourceIp
-                                              - required:
-                                                  - httpQueryParameterName
+                                            - required:
+                                              - httpHeaderName
+                                            - required:
+                                              - httpCookie
+                                            - required:
+                                              - useSourceIp
+                                            - required:
+                                              - httpQueryParameterName
                                         - required:
-                                            - httpHeaderName
+                                          - httpHeaderName
                                         - required:
-                                            - httpCookie
+                                          - httpCookie
                                         - required:
-                                            - useSourceIp
+                                          - useSourceIp
                                         - required:
-                                            - httpQueryParameterName
-                                  required:
+                                          - httpQueryParameterName
+                                    required:
                                     - consistentHash
+                              - required:
+                                - simple
+                              - properties:
+                                  consistentHash:
+                                    oneOf:
+                                    - not:
+                                        anyOf:
+                                        - required:
+                                          - httpHeaderName
+                                        - required:
+                                          - httpCookie
+                                        - required:
+                                          - useSourceIp
+                                        - required:
+                                          - httpQueryParameterName
+                                    - required:
+                                      - httpHeaderName
+                                    - required:
+                                      - httpCookie
+                                    - required:
+                                      - useSourceIp
+                                    - required:
+                                      - httpQueryParameterName
+                                required:
+                                - consistentHash
                               properties:
                                 consistentHash:
                                   properties:
@@ -714,8 +683,7 @@ spec:
                                       format: string
                                       type: string
                                     httpQueryParameterName:
-                                      description:
-                                        Hash based on a specific HTTP query
+                                      description: Hash based on a specific HTTP query
                                         parameter.
                                       format: string
                                       type: string
@@ -728,37 +696,32 @@ spec:
                                 localityLbSetting:
                                   properties:
                                     distribute:
-                                      description:
-                                        "Optional: only one of distribute
-                                        or failover can be set."
+                                      description: 'Optional: only one of distribute
+                                        or failover can be set.'
                                       items:
                                         properties:
                                           from:
-                                            description:
-                                              Originating locality, '/'
+                                            description: Originating locality, '/'
                                               separated, e.g.
                                             format: string
                                             type: string
                                           to:
                                             additionalProperties:
                                               type: integer
-                                            description:
-                                              Map of upstream localities
+                                            description: Map of upstream localities
                                               to traffic distribution weights.
                                             type: object
                                         type: object
                                       type: array
                                     enabled:
-                                      description:
-                                        enable locality load balancing,
+                                      description: enable locality load balancing,
                                         this is DestinationRule-level and will override
                                         mesh wide settings in entirety.
                                       nullable: true
                                       type: boolean
                                     failover:
-                                      description:
-                                        "Optional: only failover or distribute
-                                        can be set."
+                                      description: 'Optional: only failover or distribute
+                                        can be set.'
                                       items:
                                         properties:
                                           from:
@@ -773,10 +736,10 @@ spec:
                                   type: object
                                 simple:
                                   enum:
-                                    - ROUND_ROBIN
-                                    - LEAST_CONN
-                                    - RANDOM
-                                    - PASSTHROUGH
+                                  - ROUND_ROBIN
+                                  - LEAST_CONN
+                                  - RANDOM
+                                  - PASSTHROUGH
                                   type: string
                               type: object
                             outlierDetection:
@@ -785,8 +748,7 @@ spec:
                                   description: Minimum ejection duration.
                                   type: string
                                 consecutive5xxErrors:
-                                  description:
-                                    Number of 5xx errors before a host
+                                  description: Number of 5xx errors before a host
                                     is ejected from the connection pool.
                                   nullable: true
                                   type: integer
@@ -794,14 +756,12 @@ spec:
                                   format: int32
                                   type: integer
                                 consecutiveGatewayErrors:
-                                  description:
-                                    Number of gateway errors before a host
+                                  description: Number of gateway errors before a host
                                     is ejected from the connection pool.
                                   nullable: true
                                   type: integer
                                 interval:
-                                  description:
-                                    Time interval between ejection sweep
+                                  description: Time interval between ejection sweep
                                     analysis.
                                   type: string
                                 maxEjectionPercent:
@@ -817,8 +777,7 @@ spec:
                                   type: integer
                               type: object
                             tls:
-                              description:
-                                TLS related settings for connections to
+                              description: TLS related settings for connections to
                                 the upstream service.
                               properties:
                                 caCertificates:
@@ -833,18 +792,17 @@ spec:
                                   type: string
                                 mode:
                                   enum:
-                                    - DISABLE
-                                    - SIMPLE
-                                    - MUTUAL
-                                    - ISTIO_MUTUAL
+                                  - DISABLE
+                                  - SIMPLE
+                                  - MUTUAL
+                                  - ISTIO_MUTUAL
                                   type: string
                                 privateKey:
                                   description: REQUIRED if mode is `MUTUAL`.
                                   format: string
                                   type: string
                                 sni:
-                                  description:
-                                    SNI string to present to the server
+                                  description: SNI string to present to the server
                                     during TLS handshake.
                                   format: string
                                   type: string
@@ -857,8 +815,7 @@ spec:
                           type: object
                         type: array
                       tls:
-                        description:
-                          TLS related settings for connections to the upstream
+                        description: TLS related settings for connections to the upstream
                           service.
                         properties:
                           caCertificates:
@@ -873,18 +830,17 @@ spec:
                             type: string
                           mode:
                             enum:
-                              - DISABLE
-                              - SIMPLE
-                              - MUTUAL
-                              - ISTIO_MUTUAL
+                            - DISABLE
+                            - SIMPLE
+                            - MUTUAL
+                            - ISTIO_MUTUAL
                             type: string
                           privateKey:
                             description: REQUIRED if mode is `MUTUAL`.
                             format: string
                             type: string
                           sni:
-                            description:
-                              SNI string to present to the server during
+                            description: SNI string to present to the server during
                               TLS handshake.
                             format: string
                             type: string
@@ -905,17 +861,15 @@ spec:
                       description: HTTP connection pool settings.
                       properties:
                         h2UpgradePolicy:
-                          description:
-                            Specify if http1.1 connection should be upgraded
+                          description: Specify if http1.1 connection should be upgraded
                             to http2 for the associated destination.
                           enum:
-                            - DEFAULT
-                            - DO_NOT_UPGRADE
-                            - UPGRADE
+                          - DEFAULT
+                          - DO_NOT_UPGRADE
+                          - UPGRADE
                           type: string
                         http1MaxPendingRequests:
-                          description:
-                            Maximum number of pending HTTP requests to
+                          description: Maximum number of pending HTTP requests to
                             a destination.
                           format: int32
                           type: integer
@@ -924,13 +878,11 @@ spec:
                           format: int32
                           type: integer
                         idleTimeout:
-                          description:
-                            The idle timeout for upstream connection pool
+                          description: The idle timeout for upstream connection pool
                             connections.
                           type: string
                         maxRequestsPerConnection:
-                          description:
-                            Maximum number of requests per connection to
+                          description: Maximum number of requests per connection to
                             a backend.
                           format: int32
                           type: integer
@@ -938,8 +890,7 @@ spec:
                           format: int32
                           type: integer
                         useClientProtocol:
-                          description:
-                            If set to true, client protocol will be preserved
+                          description: If set to true, client protocol will be preserved
                             while initiating connection to backend.
                           type: boolean
                       type: object
@@ -950,14 +901,12 @@ spec:
                           description: TCP connection timeout.
                           type: string
                         maxConnections:
-                          description:
-                            Maximum number of HTTP1 /TCP connections to
+                          description: Maximum number of HTTP1 /TCP connections to
                             a destination host.
                           format: int32
                           type: integer
                         tcpKeepalive:
-                          description:
-                            If set then set SO_KEEPALIVE on the socket
+                          description: If set then set SO_KEEPALIVE on the socket
                             to enable TCP Keepalives.
                           properties:
                             interval:
@@ -973,58 +922,58 @@ spec:
                 loadBalancer:
                   description: Settings controlling the load balancer algorithms.
                   oneOf:
-                    - not:
-                        anyOf:
-                          - required:
-                              - simple
-                          - properties:
-                              consistentHash:
-                                oneOf:
-                                  - not:
-                                      anyOf:
-                                        - required:
-                                            - httpHeaderName
-                                        - required:
-                                            - httpCookie
-                                        - required:
-                                            - useSourceIp
-                                        - required:
-                                            - httpQueryParameterName
-                                  - required:
-                                      - httpHeaderName
-                                  - required:
-                                      - httpCookie
-                                  - required:
-                                      - useSourceIp
-                                  - required:
-                                      - httpQueryParameterName
-                            required:
-                              - consistentHash
-                    - required:
+                  - not:
+                      anyOf:
+                      - required:
                         - simple
-                    - properties:
-                        consistentHash:
-                          oneOf:
+                      - properties:
+                          consistentHash:
+                            oneOf:
                             - not:
                                 anyOf:
-                                  - required:
-                                      - httpHeaderName
-                                  - required:
-                                      - httpCookie
-                                  - required:
-                                      - useSourceIp
-                                  - required:
-                                      - httpQueryParameterName
+                                - required:
+                                  - httpHeaderName
+                                - required:
+                                  - httpCookie
+                                - required:
+                                  - useSourceIp
+                                - required:
+                                  - httpQueryParameterName
                             - required:
-                                - httpHeaderName
+                              - httpHeaderName
                             - required:
-                                - httpCookie
+                              - httpCookie
                             - required:
-                                - useSourceIp
+                              - useSourceIp
                             - required:
-                                - httpQueryParameterName
-                      required:
+                              - httpQueryParameterName
+                        required:
                         - consistentHash
+                  - required:
+                    - simple
+                  - properties:
+                      consistentHash:
+                        oneOf:
+                        - not:
+                            anyOf:
+                            - required:
+                              - httpHeaderName
+                            - required:
+                              - httpCookie
+                            - required:
+                              - useSourceIp
+                            - required:
+                              - httpQueryParameterName
+                        - required:
+                          - httpHeaderName
+                        - required:
+                          - httpCookie
+                        - required:
+                          - useSourceIp
+                        - required:
+                          - httpQueryParameterName
+                    required:
+                    - consistentHash
                   properties:
                     consistentHash:
                       properties:
@@ -1060,36 +1009,31 @@ spec:
                     localityLbSetting:
                       properties:
                         distribute:
-                          description:
-                            "Optional: only one of distribute or failover
-                            can be set."
+                          description: 'Optional: only one of distribute or failover
+                            can be set.'
                           items:
                             properties:
                               from:
-                                description:
-                                  Originating locality, '/' separated,
+                                description: Originating locality, '/' separated,
                                   e.g.
                                 format: string
                                 type: string
                               to:
                                 additionalProperties:
                                   type: integer
-                                description:
-                                  Map of upstream localities to traffic
+                                description: Map of upstream localities to traffic
                                   distribution weights.
                                 type: object
                             type: object
                           type: array
                         enabled:
-                          description:
-                            enable locality load balancing, this is DestinationRule-level
+                          description: enable locality load balancing, this is DestinationRule-level
                             and will override mesh wide settings in entirety.
                           nullable: true
                           type: boolean
                         failover:
-                          description:
-                            "Optional: only failover or distribute can
-                            be set."
+                          description: 'Optional: only failover or distribute can
+                            be set.'
                           items:
                             properties:
                               from:
@@ -1104,10 +1048,10 @@ spec:
                       type: object
                     simple:
                       enum:
-                        - ROUND_ROBIN
-                        - LEAST_CONN
-                        - RANDOM
-                        - PASSTHROUGH
+                      - ROUND_ROBIN
+                      - LEAST_CONN
+                      - RANDOM
+                      - PASSTHROUGH
                       type: string
                   type: object
                 outlierDetection:
@@ -1116,8 +1060,7 @@ spec:
                       description: Minimum ejection duration.
                       type: string
                     consecutive5xxErrors:
-                      description:
-                        Number of 5xx errors before a host is ejected from
+                      description: Number of 5xx errors before a host is ejected from
                         the connection pool.
                       nullable: true
                       type: integer
@@ -1125,8 +1068,7 @@ spec:
                       format: int32
                       type: integer
                     consecutiveGatewayErrors:
-                      description:
-                        Number of gateway errors before a host is ejected
+                      description: Number of gateway errors before a host is ejected
                         from the connection pool.
                       nullable: true
                       type: integer
@@ -1150,17 +1092,15 @@ spec:
                             description: HTTP connection pool settings.
                             properties:
                               h2UpgradePolicy:
-                                description:
-                                  Specify if http1.1 connection should
+                                description: Specify if http1.1 connection should
                                   be upgraded to http2 for the associated destination.
                                 enum:
-                                  - DEFAULT
-                                  - DO_NOT_UPGRADE
-                                  - UPGRADE
+                                - DEFAULT
+                                - DO_NOT_UPGRADE
+                                - UPGRADE
                                 type: string
                               http1MaxPendingRequests:
-                                description:
-                                  Maximum number of pending HTTP requests
+                                description: Maximum number of pending HTTP requests
                                   to a destination.
                                 format: int32
                                 type: integer
@@ -1169,13 +1109,11 @@ spec:
                                 format: int32
                                 type: integer
                               idleTimeout:
-                                description:
-                                  The idle timeout for upstream connection
+                                description: The idle timeout for upstream connection
                                   pool connections.
                                 type: string
                               maxRequestsPerConnection:
-                                description:
-                                  Maximum number of requests per connection
+                                description: Maximum number of requests per connection
                                   to a backend.
                                 format: int32
                                 type: integer
@@ -1183,33 +1121,28 @@ spec:
                                 format: int32
                                 type: integer
                               useClientProtocol:
-                                description:
-                                  If set to true, client protocol will
+                                description: If set to true, client protocol will
                                   be preserved while initiating connection to backend.
                                 type: boolean
                             type: object
                           tcp:
-                            description:
-                              Settings common to both HTTP and TCP upstream
+                            description: Settings common to both HTTP and TCP upstream
                               connections.
                             properties:
                               connectTimeout:
                                 description: TCP connection timeout.
                                 type: string
                               maxConnections:
-                                description:
-                                  Maximum number of HTTP1 /TCP connections
+                                description: Maximum number of HTTP1 /TCP connections
                                   to a destination host.
                                 format: int32
                                 type: integer
                               tcpKeepalive:
-                                description:
-                                  If set then set SO_KEEPALIVE on the socket
+                                description: If set then set SO_KEEPALIVE on the socket
                                   to enable TCP Keepalives.
                                 properties:
                                   interval:
-                                    description:
-                                      The time duration between keep-alive
+                                    description: The time duration between keep-alive
                                       probes.
                                     type: string
                                   probes:
@@ -1222,58 +1155,58 @@ spec:
                       loadBalancer:
                         description: Settings controlling the load balancer algorithms.
                         oneOf:
-                          - not:
-                              anyOf:
-                                - required:
-                                    - simple
-                                - properties:
-                                    consistentHash:
-                                      oneOf:
-                                        - not:
-                                            anyOf:
-                                              - required:
-                                                  - httpHeaderName
-                                              - required:
-                                                  - httpCookie
-                                              - required:
-                                                  - useSourceIp
-                                              - required:
-                                                  - httpQueryParameterName
-                                        - required:
-                                            - httpHeaderName
-                                        - required:
-                                            - httpCookie
-                                        - required:
-                                            - useSourceIp
-                                        - required:
-                                            - httpQueryParameterName
-                                  required:
-                                    - consistentHash
-                          - required:
+                        - not:
+                            anyOf:
+                            - required:
                               - simple
-                          - properties:
-                              consistentHash:
-                                oneOf:
+                            - properties:
+                                consistentHash:
+                                  oneOf:
                                   - not:
                                       anyOf:
-                                        - required:
-                                            - httpHeaderName
-                                        - required:
-                                            - httpCookie
-                                        - required:
-                                            - useSourceIp
-                                        - required:
-                                            - httpQueryParameterName
+                                      - required:
+                                        - httpHeaderName
+                                      - required:
+                                        - httpCookie
+                                      - required:
+                                        - useSourceIp
+                                      - required:
+                                        - httpQueryParameterName
                                   - required:
-                                      - httpHeaderName
+                                    - httpHeaderName
                                   - required:
-                                      - httpCookie
+                                    - httpCookie
                                   - required:
-                                      - useSourceIp
+                                    - useSourceIp
                                   - required:
-                                      - httpQueryParameterName
-                            required:
+                                    - httpQueryParameterName
+                              required:
                               - consistentHash
+                        - required:
+                          - simple
+                        - properties:
+                            consistentHash:
+                              oneOf:
+                              - not:
+                                  anyOf:
+                                  - required:
+                                    - httpHeaderName
+                                  - required:
+                                    - httpCookie
+                                  - required:
+                                    - useSourceIp
+                                  - required:
+                                    - httpQueryParameterName
+                              - required:
+                                - httpHeaderName
+                              - required:
+                                - httpCookie
+                              - required:
+                                - useSourceIp
+                              - required:
+                                - httpQueryParameterName
+                          required:
+                          - consistentHash
                         properties:
                           consistentHash:
                             properties:
@@ -1309,37 +1242,32 @@ spec:
                           localityLbSetting:
                             properties:
                               distribute:
-                                description:
-                                  "Optional: only one of distribute or
-                                  failover can be set."
+                                description: 'Optional: only one of distribute or
+                                  failover can be set.'
                                 items:
                                   properties:
                                     from:
-                                      description:
-                                        Originating locality, '/' separated,
+                                      description: Originating locality, '/' separated,
                                         e.g.
                                       format: string
                                       type: string
                                     to:
                                       additionalProperties:
                                         type: integer
-                                      description:
-                                        Map of upstream localities to traffic
+                                      description: Map of upstream localities to traffic
                                         distribution weights.
                                       type: object
                                   type: object
                                 type: array
                               enabled:
-                                description:
-                                  enable locality load balancing, this
+                                description: enable locality load balancing, this
                                   is DestinationRule-level and will override mesh
                                   wide settings in entirety.
                                 nullable: true
                                 type: boolean
                               failover:
-                                description:
-                                  "Optional: only failover or distribute
-                                  can be set."
+                                description: 'Optional: only failover or distribute
+                                  can be set.'
                                 items:
                                   properties:
                                     from:
@@ -1354,10 +1282,10 @@ spec:
                             type: object
                           simple:
                             enum:
-                              - ROUND_ROBIN
-                              - LEAST_CONN
-                              - RANDOM
-                              - PASSTHROUGH
+                            - ROUND_ROBIN
+                            - LEAST_CONN
+                            - RANDOM
+                            - PASSTHROUGH
                             type: string
                         type: object
                       outlierDetection:
@@ -1366,8 +1294,7 @@ spec:
                             description: Minimum ejection duration.
                             type: string
                           consecutive5xxErrors:
-                            description:
-                              Number of 5xx errors before a host is ejected
+                            description: Number of 5xx errors before a host is ejected
                               from the connection pool.
                             nullable: true
                             type: integer
@@ -1375,8 +1302,7 @@ spec:
                             format: int32
                             type: integer
                           consecutiveGatewayErrors:
-                            description:
-                              Number of gateway errors before a host is
+                            description: Number of gateway errors before a host is
                               ejected from the connection pool.
                             nullable: true
                             type: integer
@@ -1396,8 +1322,7 @@ spec:
                             type: integer
                         type: object
                       tls:
-                        description:
-                          TLS related settings for connections to the upstream
+                        description: TLS related settings for connections to the upstream
                           service.
                         properties:
                           caCertificates:
@@ -1412,18 +1337,17 @@ spec:
                             type: string
                           mode:
                             enum:
-                              - DISABLE
-                              - SIMPLE
-                              - MUTUAL
-                              - ISTIO_MUTUAL
+                            - DISABLE
+                            - SIMPLE
+                            - MUTUAL
+                            - ISTIO_MUTUAL
                             type: string
                           privateKey:
                             description: REQUIRED if mode is `MUTUAL`.
                             format: string
                             type: string
                           sni:
-                            description:
-                              SNI string to present to the server during
+                            description: SNI string to present to the server during
                               TLS handshake.
                             format: string
                             type: string
@@ -1436,8 +1360,7 @@ spec:
                     type: object
                   type: array
                 tls:
-                  description:
-                    TLS related settings for connections to the upstream
+                  description: TLS related settings for connections to the upstream
                     service.
                   properties:
                     caCertificates:
@@ -1452,18 +1375,17 @@ spec:
                       type: string
                     mode:
                       enum:
-                        - DISABLE
-                        - SIMPLE
-                        - MUTUAL
-                        - ISTIO_MUTUAL
+                      - DISABLE
+                      - SIMPLE
+                      - MUTUAL
+                      - ISTIO_MUTUAL
                       type: string
                     privateKey:
                       description: REQUIRED if mode is `MUTUAL`.
                       format: string
                       type: string
                     sni:
-                      description:
-                        SNI string to present to the server during TLS
+                      description: SNI string to present to the server during TLS
                         handshake.
                       format: string
                       type: string
@@ -1480,12 +1402,12 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1alpha3
-      served: true
-      storage: true
-    - name: v1beta1
-      served: true
-      storage: false
+  - name: v1alpha3
+    served: true
+    storage: true
+  - name: v1beta1
+    served: true
+    storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -1502,8 +1424,8 @@ spec:
   group: networking.istio.io
   names:
     categories:
-      - istio-io
-      - networking-istio-io
+    - istio-io
+    - networking-istio-io
     kind: EnvoyFilter
     listKind: EnvoyFilterList
     plural: envoyfilters
@@ -1516,9 +1438,8 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Customizing Envoy configuration generated by Istio. See more
-            details at: https://istio.io/docs/reference/config/networking/envoy-filter.html"
+          description: 'Customizing Envoy configuration generated by Istio. See more
+            details at: https://istio.io/docs/reference/config/networking/envoy-filter.html'
           properties:
             configPatches:
               description: One or more patches with match conditions.
@@ -1526,34 +1447,34 @@ spec:
                 properties:
                   applyTo:
                     enum:
-                      - INVALID
-                      - LISTENER
-                      - FILTER_CHAIN
-                      - NETWORK_FILTER
-                      - HTTP_FILTER
-                      - ROUTE_CONFIGURATION
-                      - VIRTUAL_HOST
-                      - HTTP_ROUTE
-                      - CLUSTER
-                      - EXTENSION_CONFIG
+                    - INVALID
+                    - LISTENER
+                    - FILTER_CHAIN
+                    - NETWORK_FILTER
+                    - HTTP_FILTER
+                    - ROUTE_CONFIGURATION
+                    - VIRTUAL_HOST
+                    - HTTP_ROUTE
+                    - CLUSTER
+                    - EXTENSION_CONFIG
                     type: string
                   match:
                     description: Match on listener/route configuration/cluster.
                     oneOf:
-                      - not:
-                          anyOf:
-                            - required:
-                                - listener
-                            - required:
-                                - routeConfiguration
-                            - required:
-                                - cluster
-                      - required:
+                    - not:
+                        anyOf:
+                        - required:
                           - listener
-                      - required:
+                        - required:
                           - routeConfiguration
-                      - required:
+                        - required:
                           - cluster
+                    - required:
+                      - listener
+                    - required:
+                      - routeConfiguration
+                    - required:
+                      - cluster
                     properties:
                       cluster:
                         description: Match on envoy cluster attributes.
@@ -1563,13 +1484,11 @@ spec:
                             format: string
                             type: string
                           portNumber:
-                            description:
-                              The service port for which this cluster was
+                            description: The service port for which this cluster was
                               generated.
                             type: integer
                           service:
-                            description:
-                              The fully qualified service name for this
+                            description: The fully qualified service name for this
                               cluster.
                             format: string
                             type: string
@@ -1579,14 +1498,13 @@ spec:
                             type: string
                         type: object
                       context:
-                        description:
-                          The specific config generation context to match
+                        description: The specific config generation context to match
                           on.
                         enum:
-                          - ANY
-                          - SIDECAR_INBOUND
-                          - SIDECAR_OUTBOUND
-                          - GATEWAY
+                        - ANY
+                        - SIDECAR_INBOUND
+                        - SIDECAR_OUTBOUND
+                        - GATEWAY
                         type: string
                       listener:
                         description: Match on envoy listener attributes.
@@ -1599,13 +1517,11 @@ spec:
                                 format: string
                                 type: string
                               destinationPort:
-                                description:
-                                  The destination_port value used by a
+                                description: The destination_port value used by a
                                   filter chain's match condition.
                                 type: integer
                               filter:
-                                description:
-                                  The name of a specific filter to apply
+                                description: The name of a specific filter to apply
                                   the patch to.
                                 properties:
                                   name:
@@ -1625,8 +1541,7 @@ spec:
                                 format: string
                                 type: string
                               sni:
-                                description:
-                                  The SNI value used by a filter chain's
+                                description: The SNI value used by a filter chain's
                                   match condition.
                                 format: string
                                 type: string
@@ -1679,19 +1594,17 @@ spec:
                                 format: string
                                 type: string
                               route:
-                                description:
-                                  Match a specific route within the virtual
+                                description: Match a specific route within the virtual
                                   host.
                                 properties:
                                   action:
-                                    description:
-                                      Match a route with specific action
+                                    description: Match a route with specific action
                                       type.
                                     enum:
-                                      - ANY
-                                      - ROUTE
-                                      - REDIRECT
-                                      - DIRECT_RESPONSE
+                                    - ANY
+                                    - ROUTE
+                                    - REDIRECT
+                                    - DIRECT_RESPONSE
                                     type: string
                                   name:
                                     format: string
@@ -1706,22 +1619,22 @@ spec:
                       filterClass:
                         description: Determines the filter insertion order.
                         enum:
-                          - UNSPECIFIED
-                          - AUTHN
-                          - AUTHZ
-                          - STATS
+                        - UNSPECIFIED
+                        - AUTHN
+                        - AUTHZ
+                        - STATS
                         type: string
                       operation:
                         description: Determines how the patch should be applied.
                         enum:
-                          - INVALID
-                          - MERGE
-                          - ADD
-                          - REMOVE
-                          - INSERT_BEFORE
-                          - INSERT_AFTER
-                          - INSERT_FIRST
-                          - REPLACE
+                        - INVALID
+                        - MERGE
+                        - ADD
+                        - REMOVE
+                        - INSERT_BEFORE
+                        - INSERT_AFTER
+                        - INSERT_FIRST
+                        - REPLACE
                         type: string
                       value:
                         description: The JSON config of the object being patched.
@@ -1743,9 +1656,9 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1alpha3
-      served: true
-      storage: true
+  - name: v1alpha3
+    served: true
+    storage: true
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -1762,13 +1675,13 @@ spec:
   group: networking.istio.io
   names:
     categories:
-      - istio-io
-      - networking-istio-io
+    - istio-io
+    - networking-istio-io
     kind: Gateway
     listKind: GatewayList
     plural: gateways
     shortNames:
-      - gw
+    - gw
     singular: gateway
   preserveUnknownFields: false
   scope: Namespaced
@@ -1778,9 +1691,8 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Configuration affecting edge load balancer. See more details
-            at: https://istio.io/docs/reference/config/networking/gateway.html"
+          description: 'Configuration affecting edge load balancer. See more details
+            at: https://istio.io/docs/reference/config/networking/gateway.html'
           properties:
             selector:
               additionalProperties:
@@ -1804,8 +1716,7 @@ spec:
                       type: string
                     type: array
                   name:
-                    description:
-                      An optional name of the server, when set must be
+                    description: An optional name of the server, when set must be
                       unique across all servers.
                     format: string
                     type: string
@@ -1826,8 +1737,7 @@ spec:
                         type: integer
                     type: object
                   tls:
-                    description:
-                      Set of TLS related options that govern the server's
+                    description: Set of TLS related options that govern the server's
                       behavior.
                     properties:
                       caCertificates:
@@ -1835,9 +1745,8 @@ spec:
                         format: string
                         type: string
                       cipherSuites:
-                        description:
-                          "Optional: If specified, only support the specified
-                          cipher list."
+                        description: 'Optional: If specified, only support the specified
+                          cipher list.'
                         items:
                           format: string
                           type: string
@@ -1848,30 +1757,30 @@ spec:
                       httpsRedirect:
                         type: boolean
                       maxProtocolVersion:
-                        description: "Optional: Maximum TLS protocol version."
+                        description: 'Optional: Maximum TLS protocol version.'
                         enum:
-                          - TLS_AUTO
-                          - TLSV1_0
-                          - TLSV1_1
-                          - TLSV1_2
-                          - TLSV1_3
+                        - TLS_AUTO
+                        - TLSV1_0
+                        - TLSV1_1
+                        - TLSV1_2
+                        - TLSV1_3
                         type: string
                       minProtocolVersion:
-                        description: "Optional: Minimum TLS protocol version."
+                        description: 'Optional: Minimum TLS protocol version.'
                         enum:
-                          - TLS_AUTO
-                          - TLSV1_0
-                          - TLSV1_1
-                          - TLSV1_2
-                          - TLSV1_3
+                        - TLS_AUTO
+                        - TLSV1_0
+                        - TLSV1_1
+                        - TLSV1_2
+                        - TLSV1_3
                         type: string
                       mode:
                         enum:
-                          - PASSTHROUGH
-                          - SIMPLE
-                          - MUTUAL
-                          - AUTO_PASSTHROUGH
-                          - ISTIO_MUTUAL
+                        - PASSTHROUGH
+                        - SIMPLE
+                        - MUTUAL
+                        - AUTO_PASSTHROUGH
+                        - ISTIO_MUTUAL
                         type: string
                       privateKey:
                         description: REQUIRED if mode is `SIMPLE` or `MUTUAL`.
@@ -1905,12 +1814,12 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1alpha3
-      served: true
-      storage: true
-    - name: v1beta1
-      served: true
-      storage: false
+  - name: v1alpha3
+    served: true
+    storage: true
+  - name: v1beta1
+    served: true
+    storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -1920,31 +1829,30 @@ metadata:
     release: istio
 spec:
   additionalPrinterColumns:
-    - JSONPath: .spec.revision
-      description: Istio control plane revision
-      name: Revision
-      type: string
-    - JSONPath: .status.status
-      description: IOP current state
-      type: string
-      name: Status
-    - JSONPath: .metadata.creationTimestamp
-      description:
-        "CreationTimestamp is a timestamp representing the server time when
-        this object was created. It is not guaranteed to be set in happens-before order
-        across separate operations. Clients may not set this value. It is represented
-        in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
-        lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
-      name: Age
-      type: date
+  - JSONPath: .spec.revision
+    description: Istio control plane revision
+    name: Revision
+    type: string
+  - JSONPath: .status.status
+    description: IOP current state
+    type: string
+    name: Status
+  - JSONPath: .metadata.creationTimestamp
+    description: 'CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
+      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+    name: Age
+    type: date
   group: install.istio.io
   names:
     kind: IstioOperator
     plural: istiooperators
     singular: istiooperator
     shortNames:
-      - iop
-      - io
+    - iop
+    - io
   scope: Namespaced
   subresources:
     status: {}
@@ -1952,35 +1860,31 @@ spec:
     openAPIV3Schema:
       properties:
         apiVersion:
-          description:
-            "APIVersion defines the versioned schema of this representation
+          description: 'APIVersion defines the versioned schema of this representation
             of an object. Servers should convert recognized schemas to the latest
             internal value, and may reject unrecognized values.
-            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#resources"
+            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#resources'
           type: string
         kind:
-          description:
-            "Kind is a string value representing the REST resource this
+          description: 'Kind is a string value representing the REST resource this
             object represents. Servers may infer this from the endpoint the client
             submits requests to. Cannot be updated. In CamelCase.
-            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
           type: string
         spec:
-          description:
-            "Specification of the desired state of the istio control plane resource.
-            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+          description: 'Specification of the desired state of the istio control plane resource.
+            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
           type: object
         status:
-          description:
-            "Status describes each of istio control plane component status at the current time.
+          description: 'Status describes each of istio control plane component status at the current time.
             0 means NONE, 1 means UPDATING, 2 means HEALTHY, 3 means ERROR, 4 means RECONCILING.
             More info: https://github.com/istio/api/blob/master/operator/v1alpha1/istio.operator.v1alpha1.pb.html &
-            https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+            https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
           type: object
   versions:
-    - name: v1alpha1
-      served: true
-      storage: true
+  - name: v1alpha1
+    served: true
+    storage: true
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -1996,29 +1900,28 @@ metadata:
   name: peerauthentications.security.istio.io
 spec:
   additionalPrinterColumns:
-    - JSONPath: .spec.mtls.mode
-      description: Defines the mTLS mode used for peer authentication.
-      name: Mode
-      type: string
-    - JSONPath: .metadata.creationTimestamp
-      description:
-        "CreationTimestamp is a timestamp representing the server time when
-        this object was created. It is not guaranteed to be set in happens-before order
-        across separate operations. Clients may not set this value. It is represented
-        in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
-        lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
-      name: Age
-      type: date
+  - JSONPath: .spec.mtls.mode
+    description: Defines the mTLS mode used for peer authentication.
+    name: Mode
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    description: 'CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
+      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+    name: Age
+    type: date
   group: security.istio.io
   names:
     categories:
-      - istio-io
-      - security-istio-io
+    - istio-io
+    - security-istio-io
     kind: PeerAuthentication
     listKind: PeerAuthenticationList
     plural: peerauthentications
     shortNames:
-      - pa
+    - pa
     singular: peerauthentication
   preserveUnknownFields: false
   scope: Namespaced
@@ -2028,8 +1931,7 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            PeerAuthentication defines how traffic will be tunneled (or
+          description: PeerAuthentication defines how traffic will be tunneled (or
             not) to the sidecar.
           properties:
             mtls:
@@ -2038,10 +1940,10 @@ spec:
                 mode:
                   description: Defines the mTLS mode used for peer authentication.
                   enum:
-                    - UNSET
-                    - DISABLE
-                    - PERMISSIVE
-                    - STRICT
+                  - UNSET
+                  - DISABLE
+                  - PERMISSIVE
+                  - STRICT
                   type: string
               type: object
             portLevelMtls:
@@ -2050,17 +1952,16 @@ spec:
                   mode:
                     description: Defines the mTLS mode used for peer authentication.
                     enum:
-                      - UNSET
-                      - DISABLE
-                      - PERMISSIVE
-                      - STRICT
+                    - UNSET
+                    - DISABLE
+                    - PERMISSIVE
+                    - STRICT
                     type: string
                 type: object
               description: Port specific mutual TLS settings.
               type: object
             selector:
-              description:
-                The selector determines the workloads to apply the ChannelAuthentication
+              description: The selector determines the workloads to apply the ChannelAuthentication
                 on.
               properties:
                 matchLabels:
@@ -2075,9 +1976,9 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1beta1
-      served: true
-      storage: true
+  - name: v1beta1
+    served: true
+    storage: true
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -2095,13 +1996,13 @@ spec:
   group: security.istio.io
   names:
     categories:
-      - istio-io
-      - security-istio-io
+    - istio-io
+    - security-istio-io
     kind: RequestAuthentication
     listKind: RequestAuthenticationList
     plural: requestauthentications
     shortNames:
-      - ra
+    - ra
     singular: requestauthentication
   preserveUnknownFields: false
   scope: Namespaced
@@ -2111,13 +2012,11 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            RequestAuthentication defines what request authentication methods
+          description: RequestAuthentication defines what request authentication methods
             are supported by a workload.
           properties:
             jwtRules:
-              description:
-                Define the list of JWTs that can be validated at the selected
+              description: Define the list of JWTs that can be validated at the selected
                 workloads' proxy.
               items:
                 properties:
@@ -2127,8 +2026,7 @@ spec:
                       type: string
                     type: array
                   forwardOriginalToken:
-                    description:
-                      If set to true, the orginal token will be kept for
+                    description: If set to true, the orginal token will be kept for
                       the ustream request.
                     type: boolean
                   fromHeaders:
@@ -2140,8 +2038,7 @@ spec:
                           format: string
                           type: string
                         prefix:
-                          description:
-                            The prefix that should be stripped before decoding
+                          description: The prefix that should be stripped before decoding
                             the token.
                           format: string
                           type: string
@@ -2158,8 +2055,7 @@ spec:
                     format: string
                     type: string
                   jwks:
-                    description:
-                      JSON Web Key Set of public keys to validate signature
+                    description: JSON Web Key Set of public keys to validate signature
                       of the JWT.
                     format: string
                     type: string
@@ -2175,8 +2071,7 @@ spec:
                 type: object
               type: array
             selector:
-              description:
-                The selector determines the workloads to apply the RequestAuthentication
+              description: The selector determines the workloads to apply the RequestAuthentication
                 on.
               properties:
                 matchLabels:
@@ -2191,9 +2086,9 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1beta1
-      served: true
-      storage: true
+  - name: v1beta1
+    served: true
+    storage: true
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -2208,39 +2103,37 @@ metadata:
   name: serviceentries.networking.istio.io
 spec:
   additionalPrinterColumns:
-    - JSONPath: .spec.hosts
-      description: The hosts associated with the ServiceEntry
-      name: Hosts
-      type: string
-    - JSONPath: .spec.location
-      description:
-        Whether the service is external to the mesh or part of the mesh (MESH_EXTERNAL
-        or MESH_INTERNAL)
-      name: Location
-      type: string
-    - JSONPath: .spec.resolution
-      description: Service discovery mode for the hosts (NONE, STATIC, or DNS)
-      name: Resolution
-      type: string
-    - JSONPath: .metadata.creationTimestamp
-      description:
-        "CreationTimestamp is a timestamp representing the server time when
-        this object was created. It is not guaranteed to be set in happens-before order
-        across separate operations. Clients may not set this value. It is represented
-        in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
-        lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
-      name: Age
-      type: date
+  - JSONPath: .spec.hosts
+    description: The hosts associated with the ServiceEntry
+    name: Hosts
+    type: string
+  - JSONPath: .spec.location
+    description: Whether the service is external to the mesh or part of the mesh (MESH_EXTERNAL
+      or MESH_INTERNAL)
+    name: Location
+    type: string
+  - JSONPath: .spec.resolution
+    description: Service discovery mode for the hosts (NONE, STATIC, or DNS)
+    name: Resolution
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    description: 'CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
+      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+    name: Age
+    type: date
   group: networking.istio.io
   names:
     categories:
-      - istio-io
-      - networking-istio-io
+    - istio-io
+    - networking-istio-io
     kind: ServiceEntry
     listKind: ServiceEntryList
     plural: serviceentries
     shortNames:
-      - se
+    - se
     singular: serviceentry
   preserveUnknownFields: false
   scope: Namespaced
@@ -2250,9 +2143,8 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Configuration affecting service registry. See more details
-            at: https://istio.io/docs/reference/config/networking/service-entry.html"
+          description: 'Configuration affecting service registry. See more details
+            at: https://istio.io/docs/reference/config/networking/service-entry.html'
           properties:
             addresses:
               description: The virtual IP addresses associated with the service.
@@ -2307,8 +2199,8 @@ spec:
               type: array
             location:
               enum:
-                - MESH_EXTERNAL
-                - MESH_INTERNAL
+              - MESH_EXTERNAL
+              - MESH_INTERNAL
               type: string
             ports:
               description: The ports associated with the external service.
@@ -2332,9 +2224,9 @@ spec:
             resolution:
               description: Service discovery mode for the hosts.
               enum:
-                - NONE
-                - STATIC
-                - DNS
+              - NONE
+              - STATIC
+              - DNS
               type: string
             subjectAltNames:
               items:
@@ -2356,12 +2248,12 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1alpha3
-      served: true
-      storage: true
-    - name: v1beta1
-      served: true
-      storage: false
+  - name: v1alpha3
+    served: true
+    storage: true
+  - name: v1beta1
+    served: true
+    storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -2378,8 +2270,8 @@ spec:
   group: networking.istio.io
   names:
     categories:
-      - istio-io
-      - networking-istio-io
+    - istio-io
+    - networking-istio-io
     kind: Sidecar
     listKind: SidecarList
     plural: sidecars
@@ -2392,9 +2284,8 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Configuration affecting network reachability of a sidecar.
-            See more details at: https://istio.io/docs/reference/config/networking/sidecar.html"
+          description: 'Configuration affecting network reachability of a sidecar.
+            See more details at: https://istio.io/docs/reference/config/networking/sidecar.html'
           properties:
             egress:
               items:
@@ -2404,9 +2295,9 @@ spec:
                     type: string
                   captureMode:
                     enum:
-                      - DEFAULT
-                      - IPTABLES
-                      - NONE
+                    - DEFAULT
+                    - IPTABLES
+                    - NONE
                     type: string
                   hosts:
                     items:
@@ -2441,9 +2332,9 @@ spec:
                     type: string
                   captureMode:
                     enum:
-                      - DEFAULT
-                      - IPTABLES
-                      - NONE
+                    - DEFAULT
+                    - IPTABLES
+                    - NONE
                     type: string
                   defaultEndpoint:
                     format: string
@@ -2489,8 +2380,8 @@ spec:
                   type: object
                 mode:
                   enum:
-                    - REGISTRY_ONLY
-                    - ALLOW_ANY
+                  - REGISTRY_ONLY
+                  - ALLOW_ANY
                   type: string
               type: object
             workloadSelector:
@@ -2507,12 +2398,12 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1alpha3
-      served: true
-      storage: true
-    - name: v1beta1
-      served: true
-      storage: false
+  - name: v1alpha3
+    served: true
+    storage: true
+  - name: v1beta1
+    served: true
+    storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -2527,33 +2418,32 @@ metadata:
   name: virtualservices.networking.istio.io
 spec:
   additionalPrinterColumns:
-    - JSONPath: .spec.gateways
-      description: The names of gateways and sidecars that should apply these routes
-      name: Gateways
-      type: string
-    - JSONPath: .spec.hosts
-      description: The destination hosts to which traffic is being sent
-      name: Hosts
-      type: string
-    - JSONPath: .metadata.creationTimestamp
-      description:
-        "CreationTimestamp is a timestamp representing the server time when
-        this object was created. It is not guaranteed to be set in happens-before order
-        across separate operations. Clients may not set this value. It is represented
-        in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
-        lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
-      name: Age
-      type: date
+  - JSONPath: .spec.gateways
+    description: The names of gateways and sidecars that should apply these routes
+    name: Gateways
+    type: string
+  - JSONPath: .spec.hosts
+    description: The destination hosts to which traffic is being sent
+    name: Hosts
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    description: 'CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
+      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+    name: Age
+    type: date
   group: networking.istio.io
   names:
     categories:
-      - istio-io
-      - networking-istio-io
+    - istio-io
+    - networking-istio-io
     kind: VirtualService
     listKind: VirtualServiceList
     plural: virtualservices
     shortNames:
-      - vs
+    - vs
     singular: virtualservice
   preserveUnknownFields: false
   scope: Namespaced
@@ -2563,9 +2453,8 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Configuration affecting label/content routing, sni routing,
-            etc. See more details at: https://istio.io/docs/reference/config/networking/virtual-service.html"
+          description: 'Configuration affecting label/content routing, sni routing,
+            etc. See more details at: https://istio.io/docs/reference/config/networking/virtual-service.html'
           properties:
             exportTo:
               description: A list of namespaces to which this virtual service is exported.
@@ -2574,8 +2463,7 @@ spec:
                 type: string
               type: array
             gateways:
-              description:
-                The names of gateways and sidecars that should apply these
+              description: The names of gateways and sidecars that should apply these
                 routes.
               items:
                 format: string
@@ -2609,8 +2497,7 @@ spec:
                           type: string
                         type: array
                       allowOrigin:
-                        description:
-                          The list of origins that are allowed to perform
+                        description: The list of origins that are allowed to perform
                           CORS requests.
                         items:
                           format: string
@@ -2620,20 +2507,20 @@ spec:
                         description: String patterns that match allowed origins.
                         items:
                           oneOf:
-                            - not:
-                                anyOf:
-                                  - required:
-                                      - exact
-                                  - required:
-                                      - prefix
-                                  - required:
-                                      - regex
-                            - required:
+                          - not:
+                              anyOf:
+                              - required:
                                 - exact
-                            - required:
+                              - required:
                                 - prefix
-                            - required:
+                              - required:
                                 - regex
+                          - required:
+                            - exact
+                          - required:
+                            - prefix
+                          - required:
+                            - regex
                           properties:
                             exact:
                               format: string
@@ -2662,33 +2549,31 @@ spec:
                         format: string
                         type: string
                       namespace:
-                        description:
-                          Namespace specifies the namespace where the delegate
+                        description: Namespace specifies the namespace where the delegate
                           VirtualService resides.
                         format: string
                         type: string
                     type: object
                   fault:
-                    description:
-                      Fault injection policy to apply on HTTP traffic at
+                    description: Fault injection policy to apply on HTTP traffic at
                       the client side.
                     properties:
                       abort:
                         oneOf:
-                          - not:
-                              anyOf:
-                                - required:
-                                    - httpStatus
-                                - required:
-                                    - grpcStatus
-                                - required:
-                                    - http2Error
-                          - required:
+                        - not:
+                            anyOf:
+                            - required:
                               - httpStatus
-                          - required:
+                            - required:
                               - grpcStatus
-                          - required:
+                            - required:
                               - http2Error
+                        - required:
+                          - httpStatus
+                        - required:
+                          - grpcStatus
+                        - required:
+                          - http2Error
                         properties:
                           grpcStatus:
                             format: string
@@ -2697,14 +2582,12 @@ spec:
                             format: string
                             type: string
                           httpStatus:
-                            description:
-                              HTTP status code to use to abort the Http
+                            description: HTTP status code to use to abort the Http
                               request.
                             format: int32
                             type: integer
                           percentage:
-                            description:
-                              Percentage of requests to be aborted with
+                            description: Percentage of requests to be aborted with
                               the error code provided.
                             properties:
                               value:
@@ -2714,16 +2597,16 @@ spec:
                         type: object
                       delay:
                         oneOf:
-                          - not:
-                              anyOf:
-                                - required:
-                                    - fixedDelay
-                                - required:
-                                    - exponentialDelay
-                          - required:
+                        - not:
+                            anyOf:
+                            - required:
                               - fixedDelay
-                          - required:
+                            - required:
                               - exponentialDelay
+                        - required:
+                          - fixedDelay
+                        - required:
+                          - exponentialDelay
                         properties:
                           exponentialDelay:
                             type: string
@@ -2731,14 +2614,12 @@ spec:
                             description: Add a fixed delay before forwarding the request.
                             type: string
                           percent:
-                            description:
-                              Percentage of requests on which the delay
+                            description: Percentage of requests on which the delay
                               will be injected (0-100).
                             format: int32
                             type: integer
                           percentage:
-                            description:
-                              Percentage of requests on which the delay
+                            description: Percentage of requests on which the delay
                               will be injected.
                             properties:
                               value:
@@ -2791,20 +2672,20 @@ spec:
                       properties:
                         authority:
                           oneOf:
-                            - not:
-                                anyOf:
-                                  - required:
-                                      - exact
-                                  - required:
-                                      - prefix
-                                  - required:
-                                      - regex
-                            - required:
+                          - not:
+                              anyOf:
+                              - required:
                                 - exact
-                            - required:
+                              - required:
                                 - prefix
-                            - required:
+                              - required:
                                 - regex
+                          - required:
+                            - exact
+                          - required:
+                            - prefix
+                          - required:
+                            - regex
                           properties:
                             exact:
                               format: string
@@ -2818,8 +2699,7 @@ spec:
                               type: string
                           type: object
                         gateways:
-                          description:
-                            Names of gateways where the rule should be
+                          description: Names of gateways where the rule should be
                             applied.
                           items:
                             format: string
@@ -2828,20 +2708,20 @@ spec:
                         headers:
                           additionalProperties:
                             oneOf:
-                              - not:
-                                  anyOf:
-                                    - required:
-                                        - exact
-                                    - required:
-                                        - prefix
-                                    - required:
-                                        - regex
-                              - required:
+                            - not:
+                                anyOf:
+                                - required:
                                   - exact
-                              - required:
+                                - required:
                                   - prefix
-                              - required:
+                                - required:
                                   - regex
+                            - required:
+                              - exact
+                            - required:
+                              - prefix
+                            - required:
+                              - regex
                             properties:
                               exact:
                                 format: string
@@ -2856,26 +2736,25 @@ spec:
                             type: object
                           type: object
                         ignoreUriCase:
-                          description:
-                            Flag to specify whether the URI matching should
+                          description: Flag to specify whether the URI matching should
                             be case-insensitive.
                           type: boolean
                         method:
                           oneOf:
-                            - not:
-                                anyOf:
-                                  - required:
-                                      - exact
-                                  - required:
-                                      - prefix
-                                  - required:
-                                      - regex
-                            - required:
+                          - not:
+                              anyOf:
+                              - required:
                                 - exact
-                            - required:
+                              - required:
                                 - prefix
-                            - required:
+                              - required:
                                 - regex
+                          - required:
+                            - exact
+                          - required:
+                            - prefix
+                          - required:
+                            - regex
                           properties:
                             exact:
                               format: string
@@ -2893,27 +2772,26 @@ spec:
                           format: string
                           type: string
                         port:
-                          description:
-                            Specifies the ports on the host that is being
+                          description: Specifies the ports on the host that is being
                             addressed.
                           type: integer
                         queryParams:
                           additionalProperties:
                             oneOf:
-                              - not:
-                                  anyOf:
-                                    - required:
-                                        - exact
-                                    - required:
-                                        - prefix
-                                    - required:
-                                        - regex
-                              - required:
+                            - not:
+                                anyOf:
+                                - required:
                                   - exact
-                              - required:
+                                - required:
                                   - prefix
-                              - required:
+                                - required:
                                   - regex
+                            - required:
+                              - exact
+                            - required:
+                              - prefix
+                            - required:
+                              - regex
                             properties:
                               exact:
                                 format: string
@@ -2930,20 +2808,20 @@ spec:
                           type: object
                         scheme:
                           oneOf:
-                            - not:
-                                anyOf:
-                                  - required:
-                                      - exact
-                                  - required:
-                                      - prefix
-                                  - required:
-                                      - regex
-                            - required:
+                          - not:
+                              anyOf:
+                              - required:
                                 - exact
-                            - required:
+                              - required:
                                 - prefix
-                            - required:
+                              - required:
                                 - regex
+                          - required:
+                            - exact
+                          - required:
+                            - prefix
+                          - required:
+                            - regex
                           properties:
                             exact:
                               format: string
@@ -2962,27 +2840,26 @@ spec:
                             type: string
                           type: object
                         sourceNamespace:
-                          description:
-                            Source namespace constraining the applicability
+                          description: Source namespace constraining the applicability
                             of a rule to workloads in that namespace.
                           format: string
                           type: string
                         uri:
                           oneOf:
-                            - not:
-                                anyOf:
-                                  - required:
-                                      - exact
-                                  - required:
-                                      - prefix
-                                  - required:
-                                      - regex
-                            - required:
+                          - not:
+                              anyOf:
+                              - required:
                                 - exact
-                            - required:
+                              - required:
                                 - prefix
-                            - required:
+                              - required:
                                 - regex
+                          - required:
+                            - exact
+                          - required:
+                            - prefix
+                          - required:
+                            - regex
                           properties:
                             exact:
                               format: string
@@ -2998,20 +2875,20 @@ spec:
                         withoutHeaders:
                           additionalProperties:
                             oneOf:
-                              - not:
-                                  anyOf:
-                                    - required:
-                                        - exact
-                                    - required:
-                                        - prefix
-                                    - required:
-                                        - regex
-                              - required:
+                            - not:
+                                anyOf:
+                                - required:
                                   - exact
-                              - required:
+                                - required:
                                   - prefix
-                              - required:
+                                - required:
                                   - regex
+                            - required:
+                              - exact
+                            - required:
+                              - prefix
+                            - required:
+                              - regex
                             properties:
                               exact:
                                 format: string
@@ -3024,8 +2901,7 @@ spec:
                                 format: string
                                 type: string
                             type: object
-                          description:
-                            withoutHeader has the same syntax with the
+                          description: withoutHeader has the same syntax with the
                             header, but has opposite meaning.
                           type: object
                       type: object
@@ -3037,8 +2913,7 @@ spec:
                         format: string
                         type: string
                       port:
-                        description:
-                          Specifies the port on the host that is being
+                        description: Specifies the port on the host that is being
                           addressed.
                         properties:
                           number:
@@ -3050,20 +2925,17 @@ spec:
                         type: string
                     type: object
                   mirror_percent:
-                    description:
-                      Percentage of the traffic to be mirrored by the `mirror`
+                    description: Percentage of the traffic to be mirrored by the `mirror`
                       field.
                     nullable: true
                     type: integer
                   mirrorPercent:
-                    description:
-                      Percentage of the traffic to be mirrored by the `mirror`
+                    description: Percentage of the traffic to be mirrored by the `mirror`
                       field.
                     nullable: true
                     type: integer
                   mirrorPercentage:
-                    description:
-                      Percentage of the traffic to be mirrored by the `mirror`
+                    description: Percentage of the traffic to be mirrored by the `mirror`
                       field.
                     properties:
                       value:
@@ -3075,8 +2947,7 @@ spec:
                     format: string
                     type: string
                   redirect:
-                    description:
-                      A HTTP rule can either redirect or forward (default)
+                    description: A HTTP rule can either redirect or forward (default)
                       traffic.
                     properties:
                       authority:
@@ -3096,19 +2967,16 @@ spec:
                         format: int32
                         type: integer
                       perTryTimeout:
-                        description:
-                          Timeout per attempt for a given request, including
+                        description: Timeout per attempt for a given request, including
                           the initial call and any retries.
                         type: string
                       retryOn:
-                        description:
-                          Specifies the conditions under which retry takes
+                        description: Specifies the conditions under which retry takes
                           place.
                         format: string
                         type: string
                       retryRemoteLocalities:
-                        description:
-                          Flag to specify whether the retries should retry
+                        description: Flag to specify whether the retries should retry
                           to other localities.
                         nullable: true
                         type: boolean
@@ -3125,22 +2993,19 @@ spec:
                         type: string
                     type: object
                   route:
-                    description:
-                      A HTTP rule can either redirect or forward (default)
+                    description: A HTTP rule can either redirect or forward (default)
                       traffic.
                     items:
                       properties:
                         destination:
                           properties:
                             host:
-                              description:
-                                The name of a service from the service
+                              description: The name of a service from the service
                                 registry.
                               format: string
                               type: string
                             port:
-                              description:
-                                Specifies the port on the host that is
+                              description: Specifies the port on the host that is
                                 being addressed.
                               properties:
                                 number:
@@ -3208,24 +3073,21 @@ spec:
                     items:
                       properties:
                         destinationSubnets:
-                          description:
-                            IPv4 or IPv6 ip addresses of destination with
+                          description: IPv4 or IPv6 ip addresses of destination with
                             optional subnet.
                           items:
                             format: string
                             type: string
                           type: array
                         gateways:
-                          description:
-                            Names of gateways where the rule should be
+                          description: Names of gateways where the rule should be
                             applied.
                           items:
                             format: string
                             type: string
                           type: array
                         port:
-                          description:
-                            Specifies the port on the host that is being
+                          description: Specifies the port on the host that is being
                             addressed.
                           type: integer
                         sourceLabels:
@@ -3234,36 +3096,31 @@ spec:
                             type: string
                           type: object
                         sourceNamespace:
-                          description:
-                            Source namespace constraining the applicability
+                          description: Source namespace constraining the applicability
                             of a rule to workloads in that namespace.
                           format: string
                           type: string
                         sourceSubnet:
-                          description:
-                            IPv4 or IPv6 ip address of source with optional
+                          description: IPv4 or IPv6 ip address of source with optional
                             subnet.
                           format: string
                           type: string
                       type: object
                     type: array
                   route:
-                    description:
-                      The destination to which the connection should be
+                    description: The destination to which the connection should be
                       forwarded to.
                     items:
                       properties:
                         destination:
                           properties:
                             host:
-                              description:
-                                The name of a service from the service
+                              description: The name of a service from the service
                                 registry.
                               format: string
                               type: string
                             port:
-                              description:
-                                Specifies the port on the host that is
+                              description: Specifies the port on the host that is
                                 being addressed.
                               properties:
                                 number:
@@ -3288,24 +3145,21 @@ spec:
                     items:
                       properties:
                         destinationSubnets:
-                          description:
-                            IPv4 or IPv6 ip addresses of destination with
+                          description: IPv4 or IPv6 ip addresses of destination with
                             optional subnet.
                           items:
                             format: string
                             type: string
                           type: array
                         gateways:
-                          description:
-                            Names of gateways where the rule should be
+                          description: Names of gateways where the rule should be
                             applied.
                           items:
                             format: string
                             type: string
                           type: array
                         port:
-                          description:
-                            Specifies the port on the host that is being
+                          description: Specifies the port on the host that is being
                             addressed.
                           type: integer
                         sniHosts:
@@ -3320,30 +3174,26 @@ spec:
                             type: string
                           type: object
                         sourceNamespace:
-                          description:
-                            Source namespace constraining the applicability
+                          description: Source namespace constraining the applicability
                             of a rule to workloads in that namespace.
                           format: string
                           type: string
                       type: object
                     type: array
                   route:
-                    description:
-                      The destination to which the connection should be
+                    description: The destination to which the connection should be
                       forwarded to.
                     items:
                       properties:
                         destination:
                           properties:
                             host:
-                              description:
-                                The name of a service from the service
+                              description: The name of a service from the service
                                 registry.
                               format: string
                               type: string
                             port:
-                              description:
-                                Specifies the port on the host that is
+                              description: Specifies the port on the host that is
                                 being addressed.
                               properties:
                                 number:
@@ -3367,12 +3217,12 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1alpha3
-      served: true
-      storage: true
-    - name: v1beta1
-      served: true
-      storage: false
+  - name: v1alpha3
+    served: true
+    storage: true
+  - name: v1beta1
+    served: true
+    storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -3387,29 +3237,28 @@ metadata:
   name: workloadentries.networking.istio.io
 spec:
   additionalPrinterColumns:
-    - JSONPath: .metadata.creationTimestamp
-      description:
-        "CreationTimestamp is a timestamp representing the server time when
-        this object was created. It is not guaranteed to be set in happens-before order
-        across separate operations. Clients may not set this value. It is represented
-        in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
-        lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
-      name: Age
-      type: date
-    - JSONPath: .spec.address
-      description: Address associated with the network endpoint.
-      name: Address
-      type: string
+  - JSONPath: .metadata.creationTimestamp
+    description: 'CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
+      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+    name: Age
+    type: date
+  - JSONPath: .spec.address
+    description: Address associated with the network endpoint.
+    name: Address
+    type: string
   group: networking.istio.io
   names:
     categories:
-      - istio-io
-      - networking-istio-io
+    - istio-io
+    - networking-istio-io
     kind: WorkloadEntry
     listKind: WorkloadEntryList
     plural: workloadentries
     shortNames:
-      - we
+    - we
     singular: workloadentry
   preserveUnknownFields: false
   scope: Namespaced
@@ -3419,9 +3268,8 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Configuration affecting VMs onboarded into the mesh. See more
-            details at: https://istio.io/docs/reference/config/networking/workload-entry.html"
+          description: 'Configuration affecting VMs onboarded into the mesh. See more
+            details at: https://istio.io/docs/reference/config/networking/workload-entry.html'
           properties:
             address:
               format: string
@@ -3456,12 +3304,12 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1alpha3
-      served: true
-      storage: true
-    - name: v1beta1
-      served: true
-      storage: false
+  - name: v1alpha3
+    served: true
+    storage: true
+  - name: v1beta1
+    served: true
+    storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -3474,25 +3322,24 @@ metadata:
   name: workloadgroups.networking.istio.io
 spec:
   additionalPrinterColumns:
-    - JSONPath: .metadata.creationTimestamp
-      description:
-        "CreationTimestamp is a timestamp representing the server time when
-        this object was created. It is not guaranteed to be set in happens-before order
-        across separate operations. Clients may not set this value. It is represented
-        in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
-        lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
-      name: Age
-      type: date
+  - JSONPath: .metadata.creationTimestamp
+    description: 'CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
+      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+    name: Age
+    type: date
   group: networking.istio.io
   names:
     categories:
-      - istio-io
-      - networking-istio-io
+    - istio-io
+    - networking-istio-io
     kind: WorkloadGroup
     listKind: WorkloadGroupList
     plural: workloadgroups
     shortNames:
-      - wg
+    - wg
     singular: workloadgroup
   preserveUnknownFields: false
   scope: Namespaced
@@ -3502,9 +3349,8 @@ spec:
     openAPIV3Schema:
       properties:
         spec:
-          description:
-            "Describes a collection of workload instances. See more details
-            at: https://istio.io/docs/reference/config/networking/workload-group.html"
+          description: 'Describes a collection of workload instances. See more details
+            at: https://istio.io/docs/reference/config/networking/workload-group.html'
           properties:
             metadata:
               description: Metadata that will be used for all corresponding `WorkloadEntries`.
@@ -3521,28 +3367,26 @@ spec:
                   type: object
               type: object
             probe:
-              description:
-                "`ReadinessProbe` describes the configuration the user
-                must provide for healthchecking on their workload."
+              description: '`ReadinessProbe` describes the configuration the user
+                must provide for healthchecking on their workload.'
               oneOf:
-                - not:
-                    anyOf:
-                      - required:
-                          - httpGet
-                      - required:
-                          - tcpSocket
-                      - required:
-                          - exec
-                - required:
+              - not:
+                  anyOf:
+                  - required:
                     - httpGet
-                - required:
+                  - required:
                     - tcpSocket
-                - required:
+                  - required:
                     - exec
+              - required:
+                - httpGet
+              - required:
+                - tcpSocket
+              - required:
+                - exec
               properties:
                 exec:
-                  description:
-                    Health is determined by how the command that is executed
+                  description: Health is determined by how the command that is executed
                     exited.
                   properties:
                     command:
@@ -3553,8 +3397,7 @@ spec:
                       type: array
                   type: object
                 failureThreshold:
-                  description:
-                    Minimum consecutive failures for the probe to be considered
+                  description: Minimum consecutive failures for the probe to be considered
                     failed after having succeeded.
                   format: int32
                   type: integer
@@ -3588,8 +3431,7 @@ spec:
                       type: string
                   type: object
                 initialDelaySeconds:
-                  description:
-                    Number of seconds after the container has started before
+                  description: Number of seconds after the container has started before
                     readiness probes are initiated.
                   format: int32
                   type: integer
@@ -3598,8 +3440,7 @@ spec:
                   format: int32
                   type: integer
                 successThreshold:
-                  description:
-                    Minimum consecutive successes for the probe to be considered
+                  description: Minimum consecutive successes for the probe to be considered
                     successful after having failed.
                   format: int32
                   type: integer
@@ -3618,8 +3459,7 @@ spec:
                   type: integer
               type: object
             template:
-              description:
-                Template to be used for the generation of `WorkloadEntry`
+              description: Template to be used for the generation of `WorkloadEntry`
                 resources that belong to this `WorkloadGroup`.
               properties:
                 address:
@@ -3656,9 +3496,22 @@ spec:
           x-kubernetes-preserve-unknown-fields: true
       type: object
   versions:
-    - name: v1alpha3
-      served: true
-      storage: true
+  - name: v1alpha3
+    served: true
+    storage: true
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: istio-ingressgateway-service-account
+  namespace: istio-system
+  labels:
+    app: istio-ingressgateway
+    istio: ingressgateway
+    release: istio
+    istio.io/rev: default
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "IngressGateways"
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -3695,20 +3548,11 @@ rules:
     resources: ["*"]
     verbs: ["get", "list", "watch"]
   - apiGroups: [""]
-    resources:
-      [
-        "endpoints",
-        "pods",
-        "services",
-        "nodes",
-        "replicationcontrollers",
-        "namespaces",
-        "secrets",
-      ]
+    resources: ["endpoints", "pods", "services", "nodes", "replicationcontrollers", "namespaces", "secrets"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["networking.istio.io"]
-    verbs: ["get", "watch", "list"]
-    resources: ["workloadentries"]
+    verbs: [ "get", "watch", "list" ]
+    resources: [ "workloadentries" ]
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]
     verbs: ["get", "list", "watch"]
@@ -3746,22 +3590,15 @@ rules:
   # istio configuration
   # removing CRD permissions can break older versions of Istio running alongside this control plane (https://github.com/istio/istio/issues/29382)
   # please proceed with caution
-  - apiGroups:
-      [
-        "config.istio.io",
-        "security.istio.io",
-        "networking.istio.io",
-        "authentication.istio.io",
-        "rbac.istio.io",
-      ]
+  - apiGroups: ["config.istio.io", "security.istio.io", "networking.istio.io", "authentication.istio.io", "rbac.istio.io"]
     verbs: ["get", "watch", "list"]
     resources: ["*"]
   - apiGroups: ["networking.istio.io"]
-    verbs: ["get", "watch", "list", "update", "patch", "create", "delete"]
-    resources: ["workloadentries"]
+    verbs: [ "get", "watch", "list", "update", "patch", "create", "delete" ]
+    resources: [ "workloadentries" ]
   - apiGroups: ["networking.istio.io"]
-    verbs: ["get", "watch", "list", "update", "patch", "create", "delete"]
-    resources: ["workloadentries/status"]
+    verbs: [ "get", "watch", "list", "update", "patch", "create", "delete" ]
+    resources: [ "workloadentries/status" ]
 
   # auto-detect installed CRD definitions
   - apiGroups: ["apiextensions.k8s.io"]
@@ -3800,7 +3637,7 @@ rules:
     resources:
       - "signers"
     resourceNames:
-      - "kubernetes.io/legacy-unknown"
+    - "kubernetes.io/legacy-unknown"
     verbs: ["approve"]
 
   # Used by Istiod to verify the JWT tokens
@@ -3873,15 +3710,15 @@ webhooks:
       caBundle: "" # patched at runtime when the webhook is ready.
     rules:
       - operations:
-          - CREATE
-          - UPDATE
+        - CREATE
+        - UPDATE
         apiGroups:
-          - security.istio.io
-          - networking.istio.io
+        - security.istio.io
+        - networking.istio.io
         apiVersions:
-          - "*"
+        - "*"
         resources:
-          - "*"
+        - "*"
     # Fail open until the validation webhook is ready. The webhook controller
     # will update this to `Fail` and patch in the `caBundle` when the webhook
     # endpoint is ready.
@@ -4353,12 +4190,12 @@ spec:
         operation: MERGE
         value:
           filters:
-            - name: istio.metadata_exchange
-              typed_config:
-                "@type": type.googleapis.com/udpa.type.v1.TypedStruct
-                type_url: type.googleapis.com/envoy.tcp.metadataexchange.config.MetadataExchange
-                value:
-                  protocol: istio-peer-exchange
+          - name: istio.metadata_exchange
+            typed_config:
+              "@type": type.googleapis.com/udpa.type.v1.TypedStruct
+              type_url: type.googleapis.com/envoy.tcp.metadataexchange.config.MetadataExchange
+              value:
+                protocol: istio-peer-exchange
     - applyTo: CLUSTER
       match:
         context: GATEWAY
@@ -4369,12 +4206,12 @@ spec:
         operation: MERGE
         value:
           filters:
-            - name: istio.metadata_exchange
-              typed_config:
-                "@type": type.googleapis.com/udpa.type.v1.TypedStruct
-                type_url: type.googleapis.com/envoy.tcp.metadataexchange.config.MetadataExchange
-                value:
-                  protocol: istio-peer-exchange
+          - name: istio.metadata_exchange
+            typed_config:
+              "@type": type.googleapis.com/udpa.type.v1.TypedStruct
+              type_url: type.googleapis.com/envoy.tcp.metadataexchange.config.MetadataExchange
+              value:
+                protocol: istio-peer-exchange
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
@@ -4410,12 +4247,12 @@ spec:
         operation: MERGE
         value:
           filters:
-            - name: istio.metadata_exchange
-              typed_config:
-                "@type": type.googleapis.com/udpa.type.v1.TypedStruct
-                type_url: type.googleapis.com/envoy.tcp.metadataexchange.config.MetadataExchange
-                value:
-                  protocol: istio-peer-exchange
+          - name: istio.metadata_exchange
+            typed_config:
+              "@type": type.googleapis.com/udpa.type.v1.TypedStruct
+              type_url: type.googleapis.com/envoy.tcp.metadataexchange.config.MetadataExchange
+              value:
+                protocol: istio-peer-exchange
     - applyTo: CLUSTER
       match:
         context: GATEWAY
@@ -4426,12 +4263,12 @@ spec:
         operation: MERGE
         value:
           filters:
-            - name: istio.metadata_exchange
-              typed_config:
-                "@type": type.googleapis.com/udpa.type.v1.TypedStruct
-                type_url: type.googleapis.com/envoy.tcp.metadataexchange.config.MetadataExchange
-                value:
-                  protocol: istio-peer-exchange
+          - name: istio.metadata_exchange
+            typed_config:
+              "@type": type.googleapis.com/udpa.type.v1.TypedStruct
+              type_url: type.googleapis.com/envoy.tcp.metadataexchange.config.MetadataExchange
+              value:
+                protocol: istio-peer-exchange
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
@@ -4674,6 +4511,7 @@ metadata:
     operator.istio.io/component: "Pilot"
     release: istio
 data:
+
   # Configuration file for the mesh networks to be used by the Split Horizon EDS.
   meshNetworks: |-
     networks: {}
@@ -4700,6 +4538,7 @@ metadata:
     operator.istio.io/component: "Pilot"
     release: istio
 data:
+
   values: |-
     {
       "global": {
@@ -5594,30 +5433,282 @@ metadata:
     app: sidecar-injector
     release: istio
 webhooks:
-  - name: sidecar-injector.istio.io
-    clientConfig:
-      service:
-        name: istiod
-        namespace: istio-system
-        path: "/inject"
-      caBundle: ""
-    sideEffects: None
-    rules:
-      - operations: ["CREATE"]
-        apiGroups: [""]
-        apiVersions: ["v1"]
-        resources: ["pods"]
-    failurePolicy: Fail
-    admissionReviewVersions: ["v1beta1", "v1"]
-    namespaceSelector:
-      matchLabels:
-        istio-injection: enabled
-    objectSelector:
-      matchExpressions:
-        - key: "sidecar.istio.io/inject"
-          operator: NotIn
-          values:
-            - "false"
+- name: sidecar-injector.istio.io
+  clientConfig:
+    service:
+      name: istiod
+      namespace: istio-system
+      path: "/inject"
+    caBundle: ""
+  sideEffects: None
+  rules:
+  - operations: [ "CREATE" ]
+    apiGroups: [""]
+    apiVersions: ["v1"]
+    resources: ["pods"]
+  failurePolicy: Fail
+  admissionReviewVersions: ["v1beta1", "v1"]
+  namespaceSelector:
+    matchLabels:
+      istio-injection: enabled
+  objectSelector:
+    matchExpressions:
+    - key: "sidecar.istio.io/inject"
+      operator: NotIn
+      values:
+      - "false"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-system
+  labels:
+    app: istio-ingressgateway
+    istio: ingressgateway
+    release: istio
+    istio.io/rev: default
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "IngressGateways"
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+      istio: ingressgateway
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: istio-ingressgateway
+        istio: ingressgateway
+        heritage: Tiller
+        release: istio
+        chart: gateways
+        service.istio.io/canonical-name: istio-ingressgateway
+        service.istio.io/canonical-revision: latest
+        istio.io/rev: default
+        install.operator.istio.io/owning-resource: unknown
+        operator.istio.io/component: "IngressGateways"
+        sidecar.istio.io/inject: "false"
+      annotations:
+        prometheus.io/port: "15020"
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/stats/prometheus"
+        sidecar.istio.io/inject: "false"
+    spec:
+      securityContext:
+        runAsUser: 1337
+        runAsGroup: 1337
+        runAsNonRoot: true
+        fsGroup: 1337
+      serviceAccountName: istio-ingressgateway-service-account
+      containers:
+        - name: istio-proxy
+          image: "docker.io/istio/proxyv2:1.9.2"
+          ports:
+            - containerPort: 15021
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 15012
+              protocol: TCP
+            - containerPort: 15443
+              protocol: TCP
+            - containerPort: 15090
+              protocol: TCP
+              name: http-envoy-prom
+          args:
+          - proxy
+          - router
+          - --domain
+          - $(POD_NAMESPACE).svc.cluster.local
+          - --proxyLogLevel=warning
+          - --proxyComponentLogLevel=misc:error
+          - --log_output_level=default:info
+          - --serviceCluster
+          - istio-ingressgateway
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+          readinessProbe:
+            failureThreshold: 30
+            httpGet:
+              path: /healthz/ready
+              port: 15021
+              scheme: HTTP
+            initialDelaySeconds: 1
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1024Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          env:
+          - name: JWT_POLICY
+            value: third-party-jwt
+          - name: PILOT_CERT_PROVIDER
+            value: istiod
+          - name: CA_ADDR
+            value: istiod.istio-system.svc:15012
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: INSTANCE_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          - name: SERVICE_ACCOUNT
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.serviceAccountName
+          - name: CANONICAL_SERVICE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['service.istio.io/canonical-name']
+          - name: CANONICAL_REVISION
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['service.istio.io/canonical-revision']
+          - name: ISTIO_META_WORKLOAD_NAME
+            value: istio-ingressgateway
+          - name: ISTIO_META_OWNER
+            value: kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway
+          - name: ISTIO_META_UNPRIVILEGED_POD
+            value: "true"
+          - name: ISTIO_META_ROUTER_MODE
+            value: standard
+          - name: ISTIO_META_CLUSTER_ID
+            value: "Kubernetes"
+          volumeMounts:
+          - name: istio-envoy
+            mountPath: /etc/istio/proxy
+          - name: config-volume
+            mountPath: /etc/istio/config
+          - mountPath: /var/run/secrets/istio
+            name: istiod-ca-cert
+          - name: istio-token
+            mountPath: /var/run/secrets/tokens
+            readOnly: true
+          - mountPath: /var/lib/istio/data
+            name: istio-data
+          - name: podinfo
+            mountPath: /etc/istio/pod
+          - name: ingressgateway-certs
+            mountPath: "/etc/istio/ingressgateway-certs"
+            readOnly: true
+          - name: ingressgateway-ca-certs
+            mountPath: "/etc/istio/ingressgateway-ca-certs"
+            readOnly: true
+      volumes:
+      - name: istiod-ca-cert
+        configMap:
+          name: istio-ca-root-cert
+      - name: podinfo
+        downwardAPI:
+          items:
+            - path: "labels"
+              fieldRef:
+                fieldPath: metadata.labels
+            - path: "annotations"
+              fieldRef:
+                fieldPath: metadata.annotations
+            - path: "cpu-limit"
+              resourceFieldRef:
+                containerName: istio-proxy
+                resource: limits.cpu
+                divisor: 1m
+            - path: "cpu-request"
+              resourceFieldRef:
+                containerName: istio-proxy
+                resource: requests.cpu
+                divisor: 1m
+      - name: istio-envoy
+        emptyDir: {}
+      - name: istio-data
+        emptyDir: {}
+      - name: istio-token
+        projected:
+          sources:
+          - serviceAccountToken:
+              path: istio-token
+              expirationSeconds: 43200
+              audience: istio-ca
+      - name: config-volume
+        configMap:
+          name: istio
+          optional: true
+      - name: ingressgateway-certs
+        secret:
+          secretName: "istio-ingressgateway-certs"
+          optional: true
+      - name: ingressgateway-ca-certs
+        secret:
+          secretName: "istio-ingressgateway-ca-certs"
+          optional: true
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - "amd64"
+                  - "ppc64le"
+                  - "s390x"
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 2
+              preference:
+                matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - "amd64"
+            - weight: 2
+              preference:
+                matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - "ppc64le"
+            - weight: 2
+              preference:
+                matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - "s390x"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -5660,20 +5751,20 @@ spec:
         - name: discovery
           image: "docker.io/istio/pilot:1.9.2"
           args:
-            - "discovery"
-            - --monitoringAddr=:15014
-            - --log_output_level=default:info
-            - --domain
-            - cluster.local
-            - --keepaliveMaxServerConnectionAge
-            - "30m"
+          - "discovery"
+          - --monitoringAddr=:15014
+          - --log_output_level=default:info
+          - --domain
+          - cluster.local
+          - --keepaliveMaxServerConnectionAge
+          - "30m"
           ports:
-            - containerPort: 8080
-              protocol: TCP
-            - containerPort: 15010
-              protocol: TCP
-            - containerPort: 15017
-              protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 15010
+            protocol: TCP
+          - containerPort: 15017
+            protocol: TCP
           readinessProbe:
             httpGet:
               path: /ready
@@ -5682,43 +5773,43 @@ spec:
             periodSeconds: 3
             timeoutSeconds: 5
           env:
-            - name: REVISION
-              value: "default"
-            - name: JWT_POLICY
-              value: third-party-jwt
-            - name: PILOT_CERT_PROVIDER
-              value: istiod
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.name
-            - name: POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.namespace
-            - name: SERVICE_ACCOUNT
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: spec.serviceAccountName
-            - name: KUBECONFIG
-              value: /var/run/secrets/remote/config
-            - name: PILOT_TRACE_SAMPLING
-              value: "1"
-            - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND
-              value: "true"
-            - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND
-              value: "true"
-            - name: ISTIOD_ADDR
-              value: istiod.istio-system.svc:15012
-            - name: PILOT_ENABLE_ANALYSIS
-              value: "false"
-            - name: CLUSTER_ID
-              value: "Kubernetes"
-            - name: EXTERNAL_ISTIOD
-              value: "false"
+          - name: REVISION
+            value: "default"
+          - name: JWT_POLICY
+            value: third-party-jwt
+          - name: PILOT_CERT_PROVIDER
+            value: istiod
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: SERVICE_ACCOUNT
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.serviceAccountName
+          - name: KUBECONFIG
+            value: /var/run/secrets/remote/config
+          - name: PILOT_TRACE_SAMPLING
+            value: "1"
+          - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND
+            value: "true"
+          - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND
+            value: "true"
+          - name: ISTIOD_ADDR
+            value: istiod.istio-system.svc:15012
+          - name: PILOT_ENABLE_ANALYSIS
+            value: "false"
+          - name: CLUSTER_ID
+            value: "Kubernetes"
+          - name: EXTERNAL_ISTIOD
+            value: "false"
           resources:
             requests:
               cpu: 500m
@@ -5729,53 +5820,72 @@ spec:
             runAsNonRoot: true
             capabilities:
               drop:
-                - ALL
+              - ALL
           volumeMounts:
-            - name: config-volume
-              mountPath: /etc/istio/config
-            - name: istio-token
-              mountPath: /var/run/secrets/tokens
-              readOnly: true
-            - name: local-certs
-              mountPath: /var/run/secrets/istio-dns
-            - name: cacerts
-              mountPath: /etc/cacerts
-              readOnly: true
-            - name: istio-kubeconfig
-              mountPath: /var/run/secrets/remote
-              readOnly: true
-            - name: inject
-              mountPath: /var/lib/istio/inject
-              readOnly: true
+          - name: config-volume
+            mountPath: /etc/istio/config
+          - name: istio-token
+            mountPath: /var/run/secrets/tokens
+            readOnly: true
+          - name: local-certs
+            mountPath: /var/run/secrets/istio-dns
+          - name: cacerts
+            mountPath: /etc/cacerts
+            readOnly: true
+          - name: istio-kubeconfig
+            mountPath: /var/run/secrets/remote
+            readOnly: true
+          - name: inject
+            mountPath: /var/lib/istio/inject
+            readOnly: true
       volumes:
-        # Technically not needed on this pod - but it helps debugging/testing SDS
-        # Should be removed after everything works.
-        - emptyDir:
-            medium: Memory
-          name: local-certs
-        - name: istio-token
-          projected:
-            sources:
-              - serviceAccountToken:
-                  audience: istio-ca
-                  expirationSeconds: 43200
-                  path: istio-token
-        # Optional: user-generated root
-        - name: cacerts
-          secret:
-            secretName: cacerts
-            optional: true
-        - name: istio-kubeconfig
-          secret:
-            secretName: istio-kubeconfig
-            optional: true
-        # Optional - image should have
-        - name: inject
-          configMap:
-            name: istio-sidecar-injector
-        - name: config-volume
-          configMap:
-            name: istio
+      # Technically not needed on this pod - but it helps debugging/testing SDS
+      # Should be removed after everything works.
+      - emptyDir:
+          medium: Memory
+        name: local-certs
+      - name: istio-token
+        projected:
+          sources:
+            - serviceAccountToken:
+                audience: istio-ca
+                expirationSeconds: 43200
+                path: istio-token
+      # Optional: user-generated root
+      - name: cacerts
+        secret:
+          secretName: cacerts
+          optional: true
+      - name: istio-kubeconfig
+        secret:
+          secretName: istio-kubeconfig
+          optional: true
+      # Optional - image should have
+      - name: inject
+        configMap:
+          name: istio-sidecar-injector
+      - name: config-volume
+        configMap:
+          name: istio
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-system
+  labels:
+    app: istio-ingressgateway
+    istio: ingressgateway
+    release: istio
+    istio.io/rev: default
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "IngressGateways"
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+      istio: ingressgateway
 ---
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
@@ -5799,20 +5909,53 @@ spec:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
+  name: istio-ingressgateway-sds
+  namespace: istio-system
+  labels:
+    release: istio
+    istio.io/rev: default
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "IngressGateways"
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
   name: istiod-istio-system
   namespace: istio-system
   labels:
     app: istiod
     release: istio
 rules:
-  - apiGroups: ["networking.istio.io"]
-    verbs: ["create"]
-    resources: ["gateways"]
+- apiGroups: ["networking.istio.io"]
+  verbs: ["create"]
+  resources: ["gateways"]
 
-  - apiGroups: [""]
-    resources: ["secrets"]
-    # TODO lock this down to istio-ca-cert if not using the DNS cert mesh config
-    verbs: ["create", "get", "watch", "list", "update", "delete"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  # TODO lock this down to istio-ca-cert if not using the DNS cert mesh config
+  verbs: ["create", "get", "watch", "list", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: istio-ingressgateway-sds
+  namespace: istio-system
+  labels:
+    release: istio
+    istio.io/rev: default
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "IngressGateways"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: istio-ingressgateway-sds
+subjects:
+- kind: ServiceAccount
+  name: istio-ingressgateway-service-account
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -5834,6 +5977,31 @@ subjects:
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
+  name: istio-ingressgateway
+  namespace: istio-system
+  labels:
+    app: istio-ingressgateway
+    istio: ingressgateway
+    release: istio
+    istio.io/rev: default
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "IngressGateways"
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: istio-ingressgateway
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
   name: istiod
   namespace: istio-system
   labels:
@@ -5850,10 +6018,55 @@ spec:
     kind: Deployment
     name: istiod
   metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        targetAverageUtilization: 80
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-system
+  annotations:
+  labels:
+    app: istio-ingressgateway
+    istio: ingressgateway
+    release: istio
+    istio.io/rev: default
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "IngressGateways"
+spec:
+  type: LoadBalancer
+  selector:
+    app: istio-ingressgateway
+    istio: ingressgateway
+  ports:
+    -
+      name: status-port
+      port: 15021
+      protocol: TCP
+      targetPort: 15021
+    -
+      name: http2
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    -
+      name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    -
+      name: tcp-istiod
+      port: 15012
+      protocol: TCP
+      targetPort: 15012
+    -
+      name: tls
+      port: 15443
+      protocol: TCP
+      targetPort: 15443
 ---
 apiVersion: v1
 kind: Service
@@ -5888,4 +6101,3 @@ spec:
     # This avoids default deployment picking the canary
     istio: pilot
 ---
-
