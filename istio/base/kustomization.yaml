@@ -1,0 +1,7 @@
+namespace: istio-system
+resources:
+  - ns.yaml
+  - istio.yaml
+  - ingress-gateway.yaml
+  - gw.yaml
+  

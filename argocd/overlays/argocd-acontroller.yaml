@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: argocd-application-controller
+  name: argocd-application-controller
+  namespace: argocd
+spec:
+  template:
+    metadata:
+      labels:
+        app: argocd-application-controller
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: argocd-metrics
+  name: argocd-metrics

@@ -1,0 +1,7 @@
+resources:
+  - base
+patches:
+  - overlays/argocd-acontroller.yaml
+  - overlays/argocd-repo.yaml
+  - overlays/argocd-redis.yaml
+  - overlays/argocd-server.yaml
