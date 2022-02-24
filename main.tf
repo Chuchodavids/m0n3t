@@ -1,8 +1,3 @@
-variable "gke_num_nodes" {
-  default     = 1
-  description = "number of gke nodes"
-}
-
 variable "project" {
   default = "change_me"
 }
@@ -65,7 +60,10 @@ resource "google_container_node_pool" "non_default_pool" {
   name       = "${google_container_cluster.primary.name}-node-pool"
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = var.gke_num_nodes
+  autoscaling {
+    min_node_count = 1
+    max_node_count = 10
+  }
 
   node_config {
     preemptible  = true
