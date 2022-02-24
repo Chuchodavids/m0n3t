@@ -5,13 +5,13 @@ metadata:
   namespace: argocd
 spec:
   hosts:
-  - "*"
+    - "*"
   gateways:
-  - istio-system/istio-gw
+    - istio-system/istio-gw
   http:
-  - name: argocd
-    route:
-      - destination:
-          host: argocd-server.argocd.svc.cluster.local
-          port:
-            number: 80
+    - name: argocd
+      route:
+        - destination:
+            host: argocd-server.argocd.svc.cluster.local
+            port:
+              number: 80

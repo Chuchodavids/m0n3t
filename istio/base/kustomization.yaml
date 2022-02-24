@@ -4,4 +4,3 @@ resources:
   - istio.yaml
   - ingress-gateway.yaml
   - gw.yaml
-  
