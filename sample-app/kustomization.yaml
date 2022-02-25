@@ -1,0 +1,8 @@
+namespace: sample-app
+resources:
+  - ns.yaml
+  - httpbin.yaml
+  - vs.yaml
+
+patches:
+  - resources-patch.yaml
