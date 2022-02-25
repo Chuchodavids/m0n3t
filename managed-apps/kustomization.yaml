@@ -1,3 +1,4 @@
 resources:
   - istio.yaml
+  - sample-app
   
