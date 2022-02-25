@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Checking gcloud connection"
-if ! gcloud info >> /dev/null 2>&1; then
+if ! gcloud auth print-access-token >> /dev/null 2>&1; then
     gcloud auth login 
 fi
 
