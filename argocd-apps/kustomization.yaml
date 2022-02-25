@@ -1,3 +1,5 @@
 resources:
   - istio.yaml
   - argocd.yaml
+  - argocd-repositories.yml
+  
