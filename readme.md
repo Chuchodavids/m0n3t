@@ -1,11 +1,11 @@
 # This repo is for demostration purposes.
 
 ## Tools
-    1. Argocd
-    1. Istio
-    1. Terraform
-    1. GKE
-    1. Kustomize
+1. Argocd
+1. Istio
+1. Terraform
+1. GKE
+1. Kustomize
 
 ### Notes
 I know Kustomize is not part of the allowed tools; however, it seemed like a good time to demostrate how Kustomize is used.
